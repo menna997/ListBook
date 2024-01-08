@@ -24,7 +24,7 @@
     <title>Form</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"/>
 
-    <link rel="stylesheet" href="index.css">
+
     <style>
         .warning{
           background-color: rgb(241, 160, 160) !important;
@@ -37,7 +37,7 @@
     <div class="container py-5">
         <h1 class="d-flex align-items-center justify-content-center" id="header">
             <i class="bi bi-book-half m-4 text-info"></i>  My<span class="text-info">Book</span>List</h1>
-        <form name="form-book">
+        <div name="form-book">
             <div >
                 <label for="nameBook" >title</label>
                 <input type="text" id="nameBook" class="u-full-width " >
@@ -45,12 +45,12 @@
               </div>      
                <div class="u-full-width ">
                 <label for="author" class="form-label">Author</label>
-                <input type="text" id="author"class="u-full-width ">
+                <input type="text" id="author"class="u-full-width " ">
   
               </div>
               <div class="u-full-width ">
                 <label for="year" class="form-label">Year</label>
-                <input type="text" id="year"class="u-full-width">
+                <input type="text" id="year"class="u-full-width" >
   
               </div>
               <div>
@@ -58,7 +58,7 @@
             </div>
 
 
-          </form>
+          </div>
           <table class="table u-full-width">
             <thead>
               <tr>
@@ -74,6 +74,6 @@
            </tbody>
           </table>
     </div>
-    <script src="main.js"></script>
+    <script src="index.js"></script>
 </body>
 </html>

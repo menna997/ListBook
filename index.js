@@ -1,175 +1,127 @@
-var NameBook= document.getElementById('nameBook');
-var Author = document.getElementById('author');
-var Year = document.getElementById('year');
-const submit = document.querySelector(".btn");
-const list = document.querySelector("#listBook");   
+var NameBookInput = document.getElementById('nameBook');
+var AuthorInput = document.getElementById('author');
+var YearInput = document.getElementById('year');
+
+console.log(NameBookInput)
 
 
-submit.addEventListener('click', function (e) {
-    e.preventDefault();
-    if (NameBook.value == '' && Author.value == '' && Year.value == '') {
+var productContainer = [];
+if (localStorage.getItem('Books') != null) {
+    productContainer = JSON.parse(localStorage.getItem('Books'))
+    displayBook(productContainer)
+}
+function addName(e) {
 
-        console.log(NameBook);
-   
-        NameBook.classList.add('warning');
-        Author.classList.add('warning');
-        Year.classList.add('warning');
-        NameBook.setAttribute('placeholder', 'write name book');
-        Author.setAttribute('placeholder', 'write name Author');
-        Year.setAttribute('placeholder', 'write name Year');
-        function removeWarning() {
-            NameBook.classList.remove('warning');
-            Author.classList.remove('warning');
-            Year.classList.remove('warning');
-    
-            NameBook.setAttribute("placeholder", "");
-            Author.setAttribute("placeholder", "");
-            Year.setAttribute("placeholder", "");
-        }
-        setTimeout(removeWarning, 1000)
+    var product = {
+        Name: NameBookInput.value,
+        Author: AuthorInput.value,
+        Year: YearInput.value
     }
-    else if (NameBook.value == '') {
-        NameBook.classList.add('warning');
-        NameBook.setAttribute('placeholder', 'write name book');
-        function removeNameWarning() {
-            NameBook.classList.remove('warning');
-            NameBook.setAttribute("placeholder", "");
-        }
-        setTimeout(removeNameWarning, 1000)
-    } else if (Author.value == '') {
-        Author.classList.add('warning');
-        Author.setAttribute('placeholder', 'write name Author');
-        function removeAuthorWarning() {
-            Author.classList.remove('warning');
-            Author.setAttribute("placeholder", "");
-        }
-        setTimeout(removeAuthorWarning, 1000)
-    } else if (Year.value == '') {
-        Year.classList.add('warning');
-        Year.setAttribute('placeholder', 'write name Year');
-        function removeYearWarning() {
-            Year.classList.remove('warning');
-            Year.setAttribute("placeholder", "");
-        }
-        setTimeout(removeYearWarning, 1000)
-    }
+    removeWarning();
+        if (NameBookInput.value == '' && AuthorInput.value == '' && YearInput.value == '') {
 
-
-
-    else {
-
-        const newRow = document.createElement('tr');
-    
-        const newNameBookColum = document.createElement('th');
-     
-        newNameBookColum .innerText = NameBook.value;
-        newRow.appendChild(newNameBookColum);
-     let NameBooks= JSON.parse(localStorage.getItem('NameBooks'))
-        if (!NameBooks) {
-            NameBooks = [];
-        }
-     
-        NameBook.push(JSON.stringify(NameBook.value))
-     
-        localStorage.setItem('NameBook', JSON.stringify(NameBook));
-
-    
-        const newAuthorColum = document.createElement('th');
-    
-        newAuthorColum.innerText = Author.value;
-        newRow.appendChild(newAuthorColum);
-        if (!authors) {
-            authors = [];
-        }
+            console.log(NameBookInput);
    
-        authors.push(JSON.stringify(Author.value))
+            NameBookInput.classList.add('warning');
+       
+            AuthorInput.classList.add('warning');
+
+            YearInput.classList.add('warning');
      
-        localStorage.setItem('Author', JSON.stringify(authors));
-        const newYearColum = document.createElement('th');
+            NameBookInput.setAttribute('placeholder', 'write name book');
+      
+            AuthorInput.setAttribute('placeholder', 'write name Author');
         
-        newYearColum.innerText = Year.value;
-        newRow.appendChild(newYearColum);
-        
-        if (!years) {
-            years = [];
+            YearInput.setAttribute('placeholder', 'write name Year');
+            
+            e.preventDefault();
+            removeWarning();
         }
 
-        years.push(JSON.stringify(Year.value))
-        localStorage.setItem('Year', JSON.stringify(years));
-
-        const newIconColum = document.createElement('td')
-        newIconColum.innerHTML = `
-        <button type="button" class="btn btn-outline-danger"> Delete</button>
-        `
-        newRow.appendChild(newIconColum)
-        
+        removeNameWarning()
+        if (NameBookInput.value === '') {
+      
+            NameBookInput.classList.add('warning');
+            NameBookInput.setAttribute('placeholder', 'write name book');
+            e.preventDefault();
+            removeNameWarning();
+     
+        }
+    removeAuthorWarning();
+        if (AuthorInput.value === '') {
+            AuthorInput.classList.add('warning');
+            AuthorInput.setAttribute('placeholder', 'write name Author');
+            e.preventDefault();
+            removeAuthorWarning();
     }
+    removeYearWarning()
+    if (YearInput.value === '') {
+            YearInput.classList.add('warning');
+            YearInput.setAttribute('placeholder', 'write name Year');
+            e.preventDefault();
+        
+        removeYearWarning();
+        }
 
-    NameBook.value = '';
-    Author.value = '';
-    Year.value = '';
-});
 
+        console.log(product)
+        productContainer.push(product);
+        localStorage.setItem("Books", JSON.stringify(productContainer));
+        console.log(productContainer);
+        displayBook(productContainer)
+        clearForm();
 
-
-function getLocalStorageData(arr) {
-    let localStorageNameBook = JSON.parse(localStorage.getItem('NameBook'));
-    
-    let localStorageAuthor = JSON.parse(localStorage.getItem('Author'));
-    let localStorageYear = JSON.parse(localStorage.getItem('Year'));
-    let tableRow = document.createElement('tr');
-    let tableRowAuthor = document.createElement('tr');
-    let tableRowYear = document.createElement('tr');
-
-    console.log(tableRow)
-
-    localStorageNameBook.forEach(SingleNameBook => {
-        let tableData = document.createElement('td');
-
-        tableData.innerHTML = SingleNameBook.replace('"', '').replace('"', '');
-        tableRow.appendChild(tableData);
-   
-    });
-    localStorageAuthor.forEach(SingleAuthor => {
-        let tableDataAuthor = document.createElement('td');
-        tableDataAuthor.innerHTML = SingleAuthor.replace('"', '').replace('"', '');
-        tableRowAuthor.appendChild(tableDataAuthor);
-    });   localStorageYear.forEach(SingleYear => {
-        let tableDataYear = document.createElement('td');
-    
-        tableDataYear.innerHTML = SingleYear.replace('"', '').replace('"', '');
-        tableRowYear.appendChild(tableDataYear);
-    });
-    list.appendChild(tableRow);
-    list.appendChild(tableRowAuthor);
-    list.appendChild(tableRowYear)
 }
 
+function removeWarning() {
+    NameBookInput.classList.remove('warning');
+    AuthorInput.classList.remove('warning');
+    YearInput.classList.remove('warning');
 
+    NameBookInput.setAttribute("placeholder", "");
+    AuthorInput.setAttribute("placeholder", "");
+    YearInput.setAttribute("placeholder", "");
 
+}
+setTimeout(removeWarning, 1000)
+function removeNameWarning() {
+    NameBookInput.classList.remove('warning');
+    NameBookInput.setAttribute("placeholder", "");
+}
+setTimeout(removeNameWarning, 1000)
+function removeAuthorWarning() {
+    AuthorInput.classList.remove('warning');
+    AuthorInput.setAttribute("placeholder", "");
+}
+setTimeout(removeAuthorWarning, 1000)
+function removeYearWarning() {
+    YearInput.classList.remove('warning');
+    YearInput.setAttribute("placeholder", "");
 
-//   var x = document.forms["form-book"]["nameBook"].value;
-//     var a = document.forms["form-book"]["author"].value;
-//     var y = document.forms["form-book"]["year"].value;
-//         if (x == "" && a=="" && y=="") {
-//             alert("input must be filled out");
-//           return false;
-//     }
-//     if (x == "" ) {
-//         // alert("Name must be filled out");
-    
-//         x.classList.add('warning');
-//       return false;
-// }
-//     if (a == "") {
-//         alert("Author must be filled out");
-        
-        
-         
-//         return false;
-//     }    if ( y=="") {
-//         alert("Year must be filled out");
-    
-     
-//       return false;
-// }
+}
+setTimeout(removeYearWarning, 1000)
+function clearForm() {
+    NameBookInput.value = "";
+    AuthorInput.value = "";
+    YearInput.value = "";
+}
+
+function displayBook(arr) {
+    var book= ``;
+    for (var i = 0; i < arr.length; i++){
+        book += `<tr>
+        <td>${arr[i].Name}</td>
+        <td>${arr[i].Author}</td>   
+        <td>${arr[i].Year}</td>
+        <td ><button onclick="deleteProduct(${i});"  type="button" class="btn btn-outline-danger"> Delete</button></td>
+      </tr>`;
+
+    }
+    document.getElementById("listBook").innerHTML = book;
+}
+
+function deleteProduct(productIndex) {
+    productContainer.splice(productIndex, 1);
+    localStorage.setItem("Books", JSON.stringify(productContainer));
+    displayBook(productContainer);
+}
